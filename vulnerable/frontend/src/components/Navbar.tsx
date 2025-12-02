@@ -39,7 +39,7 @@ const Navbar = () => {
               )}
               <li>
                 <details>
-                  <summary>Bonjour {user.username} (role {user.role})</summary>
+                  <summary>Bonjour {user.username} </summary>
                   <ul className="bg-base-100 rounded-t-none p-2">
                     <li><button className="btn btn-error btn-sm" onClick={logout}>
                       Logout

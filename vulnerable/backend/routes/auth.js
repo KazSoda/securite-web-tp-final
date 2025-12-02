@@ -29,12 +29,19 @@ router.post('/login', async (req, res) => {
     if (results.length === 0) {
       return res.status(401).json({ error: 'Email incorrect' });
     }
-    const user = results[0];
-    if (user.password !== password) {
+
+    if (results[0].password !== password) {
       return res.status(401).json({ error: 'Mot de passe incorrect' });
     }
-    const token = generateToken(user);
-    res.json({ message: 'Connexion réussie', token });
+    const token = generateToken(results[0]);
+
+    const user = results[0];
+    delete user.password;
+    delete user.email;
+    delete user.role;
+    delete user.created_at;
+
+    res.json({ message: 'Connexion réussie', token, user });
   } catch (err) {
     console.error('Erreur lors de la connexion :', err);
     res.status(500).json({ error: 'Erreur lors de la connexion' });
