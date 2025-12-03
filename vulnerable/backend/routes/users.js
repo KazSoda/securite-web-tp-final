@@ -14,6 +14,19 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Route pour lister les utilisateurs
+router.get('/admin', async (req, res) => {
+    // TODO : ajouter vérif sur le token
+    const sql = 'SELECT * FROM users';
+    try {
+        const [results] = await req.db.execute(sql);
+        res.json(results);
+    } catch (err) {
+        console.error('Erreur lors de la récupération des utilisateurs :', err);
+        res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs' });
+    }
+});
+
 // Route pour récupérer un utilisateur spécifique
 router.get('/:id', async (req, res) => {
   const { id } = req.params;

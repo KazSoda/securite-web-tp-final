@@ -24,7 +24,7 @@ const AdminUsersPage = () => {
 
     // Récupérer les utilisateurs
     axiosInstance
-      .get("/users")
+      .get("/users/admin")
       .then((response) => setUsers(response.data))
       .catch((error) => {
         console.error("Erreur lors de la récupération des utilisateurs :", error);
