@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JWT Security Scan Report</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            color: #333;
+            line-height: 1.4;
+        }
+        .header { 
+            text-align: center; 
+            border-bottom: 2px solid #2563eb; 
+            padding-bottom: 20px; 
+            margin-bottom: 30px;
+        }
+        .logo { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #2563eb; 
+            margin-bottom: 10px;
+        }
+        .scan-date { 
+            color: #666; 
+            font-size: 14px;
+        }
+        .scores {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        .score-card {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid;
+            border-radius: 8px;
+        }
+        .security-card {
+            border-color: #10b981;
+            background-color: #f0fdf4;
+        }
+        .risk-card {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .security-score {
+            color: #059669;
+        }
+        .risk-score {
+            color: #dc2626;
+        }
+        .critical-alert {
+            background-color: #fef2f2;
+            border: 2px solid #ef4444;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .critical-title {
+            color: #dc2626;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .cracked-secret {
+            background-color: #fee2e2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        .issues-section {
+            margin: 30px 0;
+        }
+        .issue {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid;
+            border-radius: 4px;
+        }
+        .critical { 
+            border-color: #dc2626; 
+            background-color: #fef2f2;
+        }
+        .high { 
+            border-color: #f59e0b; 
+            background-color: #fffbeb;
+        }
+        .medium { 
+            border-color: #eab308; 
+            background-color: #fefce8;
+        }
+        .low { 
+            border-color: #3b82f6; 
+            background-color: #eff6ff;
+        }
+        .issue-header {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .severity {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+        .severity.critical { 
+            background-color: #dc2626; 
+            color: white;
+        }
+        .severity.high { 
+            background-color: #f59e0b; 
+            color: white;
+        }
+        .severity.medium { 
+            background-color: #eab308; 
+            color: white;
+        }
+        .severity.low { 
+            background-color: #3b82f6; 
+            color: white;
+        }
+        .recommendation {
+            background-color: #f8fafc;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        .token-details {
+            margin: 30px 0;
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .token-section {
+            margin: 15px 0;
+        }
+        .token-content {
+            background-color: #1f2937;
+            color: #f9fafb;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .summary {
+            background-color: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🔍 JWT Security Scanner Report</div>
+        <div>Comprehensive Security Analysis</div>
+        <div class="scan-date">Generated: 03/12/2025 14:58:44</div>
+    </div>
+
+    <div class="scores">
+        <div class="score-card security-card">
+            <h3>Security Level</h3>
+            <div class="score security-score">17%</div>
+            <div>Critical</div>
+        </div>
+        <div class="score-card risk-card">
+            <h3>Risk Level</h3>
+            <div class="score risk-score">100%</div>
+            <div>Critical</div>
+        </div>
+    </div>
+
+    
+    <div class="critical-alert">
+        <div class="critical-title">🚨 CRITICAL: Secret Compromised!</div>
+        <p>Your JWT secret was successfully cracked during analysis. This represents a critical security vulnerability that requires immediate attention.</p>
+        <div class="cracked-secret">
+            <strong>Cracked Secret:</strong> "supersecretkey"
+            <br><strong>SHA256 Hash:</strong> e706386a58190ee13247ffc85c07f5fee617aed1e339cd935e64bab32bfe8fc8
+        </div>
+        <p><strong>Immediate Actions Required:</strong></p>
+        <ul>
+            <li>Rotate secret immediately using a cryptographically random 256+ bit secret</li>
+            <li>Invalidate all existing tokens signed with this secret</li>
+            <li>Review access logs for potential unauthorized token use</li>
+            <li>Consider asymmetric signing (RS256/ES256) for better security</li>
+        </ul>
+    </div>
+    
+
+    <div class="summary">
+        <h3>Executive Summary</h3>
+        <p><strong>Issues Found:</strong> 4 total security issues</p>
+        <ul>
+            <li>Critical: 1</li>
+            <li>High: 0</li>
+            <li>Medium: 1</li>
+            <li>Low: 2</li>
+        </ul>
+        <p><strong>⚠️ Critical Finding:</strong> Weak HMAC secret successfully cracked - immediate remediation required.</p>
+    </div>
+
+    <div class="issues-section">
+        <h2>Detailed Security Issues & Recommendations</h2>
+        
+            <div class="issue critical">
+                <div class="issue-header">
+                    <span class="severity critical">Critical</span>
+                    Secret Strength - Weak HMAC secret cracked: "supersecretkey"
+                </div>
+                <div><strong>Impact:</strong> Anyone can forge tokens with this secret</div>
+                <div class="recommendation">
+                    <strong>💡 Recommendation:</strong> Use a strong, randomly generated secret (minimum 256 bits). Rotate immediately.
+                </div>
+            </div>
+        
+            <div class="issue medium">
+                <div class="issue-header">
+                    <span class="severity medium">Medium</span>
+                    Algorithm - HMAC signing requires shared secret management
+                </div>
+                <div><strong>Impact:</strong> Shared secret must be securely distributed and rotated across all parties</div>
+                <div class="recommendation">
+                    <strong>💡 Recommendation:</strong> Consider RS256/ES256 for distributed systems or ensure robust secret management across all services
+                </div>
+            </div>
+        
+            <div class="issue low">
+                <div class="issue-header">
+                    <span class="severity low">Low</span>
+                    Claims - Missing audience (aud) claim
+                </div>
+                <div><strong>Impact:</strong> Tokens may be misused by unintended parties in distributed systems</div>
+                <div class="recommendation">
+                    <strong>💡 Recommendation:</strong> Add "aud" claim to specify intended token recipient (recommended for multi-service environments)
+                </div>
+            </div>
+        
+            <div class="issue low">
+                <div class="issue-header">
+                    <span class="severity low">Low</span>
+                    Claims - Missing issuer (iss) claim
+                </div>
+                <div><strong>Impact:</strong> Cannot verify token origin or trace token lifecycle</div>
+                <div class="recommendation">
+                    <strong>💡 Recommendation:</strong> Add "iss" claim to identify token issuer (improves auditability)
+                </div>
+            </div>
+        
+    </div>
+
+    <div class="token-details">
+        <h2>Token Analysis Details</h2>
+        <div class="token-section">
+            <h3>Header</h3>
+            <div class="token-content">{
+  "alg": "HS256",
+  "typ": "JWT"
+}</div>
+        </div>
+        <div class="token-section">
+            <h3>Payload</h3>
+            <div class="token-content">{
+  "id": 3,
+  "role": "user",
+  "iat": 1764770168,
+  "exp": 1764813368
+}</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Generated by JWT Security Scanner - Exploit-Forge LTD</p>
+        <p>This report contains security analysis performed on 03/12/2025</p>
+        <p>⚠️ This report may contain sensitive information. Handle with appropriate security measures.</p>
+    </div>
+</body>
+</html>
