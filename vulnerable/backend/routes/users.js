@@ -15,8 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // Route pour lister les utilisateurs
-router.get('/admin', async (req, res) => {
-    // TODO : ajouter vérif sur le token
+router.get('/admin', authenticate, authorizeAdmin, async (req, res) => {
     const sql = 'SELECT * FROM users';
     try {
         const [results] = await req.db.execute(sql);
