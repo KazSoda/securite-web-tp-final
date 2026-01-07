@@ -23,7 +23,6 @@ const LoginPage = () => {
       .then((response) => {
         setUser(response.data.user);
         localStorage.setItem("authToken", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
         toast.success("Vous êtes connecté.");
         navigate("/");
       })
