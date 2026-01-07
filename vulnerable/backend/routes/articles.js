@@ -50,9 +50,11 @@ router.get('/:id', async (req, res) => {
 });
 
 // Route pour créer un nouvel article
-router.post('/', async (req, res) => {
-  const { title, content, author_id } = req.body;
+router.post('/', authenticate, async (req, res) => {
+  const { title, content } = req.body;
   const sql = 'INSERT INTO articles (title, content, author_id) VALUES (?, ?, ?)';
+  const author_id = req.user_id;
+
   try {
     const [results] = await req.db.execute(sql, [title, content, author_id]);
     const newArticle = {
@@ -69,26 +71,46 @@ router.post('/', async (req, res) => {
 });
 
 // Route pour modifier un article
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { title, content, author_id } = req.body;
-  const sql = 'UPDATE articles SET title = ?, content = ?, author_id = ? WHERE id = ?';
-  try {
-    const [results] = await req.db.execute(sql, [title, content, author_id, id]);
-    if (results.affectedRows === 0) {
-      return res.status(404).json({ error: 'Article introuvable' });
+router.put('/:id', authenticate, async (req, res) => {
+    const articleId = req.params.id;
+    const { title, content } = req.body;
+
+    try {
+        const [rows] = await req.db.execute(
+            'SELECT author_id FROM articles WHERE id = ?',
+            [articleId]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Article introuvable' });
+        }
+
+        const article = rows[0];
+
+        if (article.author_id !== req.user.id && req.user.role !== 'admin') {
+            return res.status(403).json({
+                error: 'Vous n’êtes pas autorisé à modifier cet article'
+            });
+        }
+
+        const [result] = await req.db.execute(
+            'UPDATE articles SET title = ?, content = ? WHERE id = ?',
+            [title, content, articleId]
+        );
+
+        res.json({
+            message: 'Article modifié avec succès',
+            article: {
+                id: articleId,
+                title,
+                content,
+                author_id: article.author_id
+            }
+        });
+    } catch (err) {
+        console.error('Erreur lors de la modification de l\'article :', err);
+        res.status(500).json({ error: 'Erreur lors de la modification de l\'article' });
     }
-    const updatedArticle = {
-      id,
-      title,
-      content,
-      author_id
-    };
-    res.json({ message: 'Article modifié avec succès', article: updatedArticle });
-  } catch (err) {
-    console.error('Erreur lors de la modification de l\'article :', err);
-    res.status(500).json({ error: 'Erreur lors de la modification de l\'article' });
-  }
 });
 
 // Route pour supprimer un article
