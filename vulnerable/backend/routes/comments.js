@@ -36,13 +36,11 @@ router.get('/comments/:id', async (req, res) => {
 // Route pour ajouter un commentaire
 router.post('/articles/:id/comments', authenticate, async (req, res) => {
   const { id } = req.params;
-  const { content, user_id } = req.body;
-  //const sql = 'INSERT INTO comments (content, user_id, article_id) VALUES (?, ?, ?)';
-  const sql = `INSERT INTO comments (user_id, article_id, content) VALUES (${user_id}, ${id}, '${content}')`;
-  //const sql = `SELECT * FROM comments WHERE user_id = ${user_id}`;
+  const content = req.body.content;
+  const user_id = req.user.id;
+  const sql = 'INSERT INTO comments (user_id, article_id, content) VALUES (?, ?, ?)';
   try {
-    //const [results] = await req.db.execute(sql, [content, user_id, id]);
-    const [results] = await req.db.query(sql);
+    const [results] = await req.db.execute(sql, [user_id, id, content]);
     const newComment = {
       id: results.insertId,
       content,
